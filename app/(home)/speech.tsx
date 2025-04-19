@@ -69,37 +69,6 @@ import {View,Text,Image,TouchableOpacity,Platform,Linking,} from "react-native";
         });
       }
     };
-    async function saveFile(uri, filename, mimetype) {
-      if (Platform.OS === "android") {
-        const permissions =
-          await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
-        const mimeType = mimetype ?? "audio/mpeg"; // Fallback to "audio/mpeg" if null
-        if (permissions.granted) {
-          const base64 = await FileSystem.readAsStringAsync(uri, {
-            encoding: FileSystem.EncodingType.Base64,
-          });
-  
-          const safeFilename = `audio_${new Date().getTime()}.mp3`;
-  
-          await FileSystem.StorageAccessFramework.createFileAsync(
-            permissions.directoryUri,
-            safeFilename,
-            mimeType
-          )
-            .then(async (newUri) => {
-              await FileSystem.writeAsStringAsync(newUri, base64, {
-                encoding: FileSystem.EncodingType.Base64,
-              });
-              console.log("File saved successfully:", newUri);
-            })
-            .catch((e) => console.log("File creation error:", e));
-        } else {
-          console.log("Permission not granted.");
-        }
-      } else {
-        console.log("SAF is only required for Android.");
-      }
-    }
   
     return (
       <LinearGradient
