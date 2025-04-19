@@ -4,9 +4,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, ScrollView, Activity
   import { LinearGradient } from "expo-linear-gradient";
   import { SafeAreaView } from "react-native-safe-area-context";
   import { languages, voices } from "@/constants/voices";
-  import DropDownMenu from "@/components/DropDownMenu";
-  import { router } from "expo-router";
-  import axios from "axios";
+  import DropDownMenu from "@/Components/DropDownMenu";
   import Modal from "react-native-modal";
   import { StatusBar } from "expo-status-bar";
   
@@ -38,41 +36,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, ScrollView, Activity
       (voice) => voice.id === selectedVoiceOver
     );
   
-    const selectedVoice = `${selectedVoiceData[0]?.id} - ${selectedVoiceData[0]?.locale} (${selectedVoiceData[0]?.gender})`;
-    // console.log(`Selected Voice:`, selectedVoice);
-    const ANDROID_DEVICE = Platform.OS === "android";
-    const IP_ADDRESS = ANDROID_DEVICE ? "10.0.2.2" : "localhost";
-    // voice id + " - " + locale + (${gender})
-    const handleGenerateSpeechFromText = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.post(
-          `https://echoify-it.onrender.com/generate-tts`,
-          {
-            text: script,
-            voice: selectedVoice,
-          },
-          {
-            headers: {
-              "Content-Length": "application/json",
-              Accept: "*/*",
-            },
-          }
-        );
-        console.log((await response).data);
-        router.navigate({
-          pathname: "/script234",
-          params: { url: response.data.url },
-        });
-        setScript("");
-      } catch (error) {
-        console.log("Something went wrong: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    //   en-US
-    // label: John (Mail)..
+
     return (
       <LinearGradient
         colors={["#5e35b1", "#673ab7", "#ab47bc"]}
@@ -176,7 +140,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, ScrollView, Activity
                 <View className="mt-8">
                   <DropDownMenu
                     data={dataVoices}
-                    onHandleChange={(value) => setSelectedVoiceOver(value)}
+                    //onHandleChange={(value) => setSelectedVoiceOver(value)}
                   />
                 </View>  
                 {/* generate speech */}
@@ -185,7 +149,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity, ScrollView, Activity
           </ScrollView>
         </SafeAreaView>
         <TouchableOpacity
-          onPress={handleGenerateSpeechFromText}
+          //onPress={handleGenerateSpeechFromText}
           disabled={script.length < 3 || !selectedVoiceOver}
           className=" absolute bottom-12 py-5  mt-3 px-3 rounded-full w-full justify-center self-center"
         >
