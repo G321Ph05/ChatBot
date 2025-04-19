@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 
 export default function Index() {
   const API_key = "";
@@ -6,6 +6,7 @@ export default function Index() {
   return (
     <View style={styles.text}>
       <Text>Hello</Text>
+      <Text>Good Morning</Text>
     </View>
   );
 }
@@ -15,5 +16,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  input: {
+    height: 20, 
+    color: "black",
+    borderStyle: "solid"
   }
 })
